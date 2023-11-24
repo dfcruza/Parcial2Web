@@ -1,5 +1,8 @@
-import { PerformerEntity } from 'src/performerk-entity/performer.entity/performer.entity';
-import { TrackEntity } from 'src/track-entity/track.entity/track.entity';
+import { PerformerEntity } from '../performer-entity/performer.entity/performer.entity';
+
+import { TrackEntity } from '../track-entity/track.entity/track.entity';
+
+
 import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable, OneToMany } from 'typeorm';
 
 @Entity()
@@ -27,3 +30,4 @@ export class AlbumEntity {
     @OneToMany(type => TrackEntity, track => track.album)
     tracks: TrackEntity[];
 }
+

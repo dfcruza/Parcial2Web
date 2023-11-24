@@ -5,6 +5,9 @@ import { AlbumEntityModule } from './album-entity/album-entity.module';
 import { TrackEntityModule } from './track-entity/track-entity.module';
 import { PerformerkEntityModule } from './performerk-entity/performerk-entity.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { AlbumService } from './album/album.service';
+import { TracksService } from './tracks/tracks.service';
+import { PerformerskService } from './performersk/performersk.service';
 
 @Module({
   imports: [AlbumEntityModule, TrackEntityModule, PerformerkEntityModule, TypeOrmModule.forRoot(
@@ -19,6 +22,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
   keepConnectionAlive: true,}
   )],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, AlbumService, TracksService, PerformerskService],
 })
 export class AppModule {}
