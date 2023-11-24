@@ -5,7 +5,7 @@ import { AlbumEntityModule } from './album-entity/album-entity.module';
 import { TrackEntityModule } from './track-entity/track-entity.module';
 import { PerformerkEntityModule } from './performerk-entity/performerk-entity.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AlbumService } from './album/album.service';
+import { AlbumService } from './album-entity/album.service';
 import { TracksService } from './tracks/tracks.service';
 import { PerformerskService } from './performersk/performersk.service';
 

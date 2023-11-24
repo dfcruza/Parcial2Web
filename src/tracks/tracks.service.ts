@@ -23,4 +23,13 @@ export class TracksService {
         }
         return track;
     }
+
+    async create(track: TrackEntity): Promise<TrackEntity> {
+        return await this.trackRepository.save(track);
+    }
+
+    update(id: string, track: TrackEntity): Promise<TrackEntity> {
+        track.id = id;
+        return this.trackRepository.save(track);
+    }
 }
