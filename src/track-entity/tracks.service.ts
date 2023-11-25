@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { read } from 'fs';
 import { TrackEntity } from 'src/track-entity/track.entity/track.entity';
 import { Repository } from 'typeorm';
+import { BusinessError, BusinessLogicException } from 'src/shared/bussiness-errors';
 
 @Injectable()
 export class TracksService {
@@ -12,14 +12,14 @@ export class TracksService {
     private readonly trackRepository: Repository<TrackEntity>) {}
 
     async findAll(): Promise<TrackEntity[]> {
-        return await this.trackRepository.find();
+        return await this.trackRepository.find({ relations: ['album']});
     }
 
     async findOne(id: string): Promise<TrackEntity> {
 
-        const track = await this.trackRepository.findOne({where: {id}, relations: ['album']});
+        const track: TrackEntity = await this.trackRepository.findOne({ where: {id}, relations: ['album']});
         if (!track) {
-            return null;
+            throw new BusinessLogicException('Track not found', BusinessError.NOT_FOUND);
         }
         return track;
     }
@@ -28,8 +28,22 @@ export class TracksService {
         return await this.trackRepository.save(track);
     }
 
-    update(id: string, track: TrackEntity): Promise<TrackEntity> {
+    async update(id: string, track: TrackEntity): Promise<TrackEntity> {
+        const trackToUpdate: TrackEntity = await this.trackRepository.findOne({ where: {id}});
+        if (!trackToUpdate) {
+            throw new BusinessLogicException('Track not found', BusinessError.NOT_FOUND);
+        }
+
         track.id = id;
-        return this.trackRepository.save(track);
+
+        return await this.trackRepository.save(track);
+    }
+
+    async delete(id: string): Promise<void> {
+        const trackToDelete: TrackEntity = await this.trackRepository.findOne({ where: {id}});
+        if (!trackToDelete) {
+            throw new BusinessLogicException('Track not found', BusinessError.NOT_FOUND);
+        }
+        await this.trackRepository.remove(trackToDelete);
     }
 }
