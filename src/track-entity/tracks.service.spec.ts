@@ -112,7 +112,7 @@ describe('TracksService', () => {
     const track: TrackEntity = tracksList[0];
     await service.delete(track.id.toString());
     const deletedTrack: TrackEntity = await repository.findOne({ where: { id: track.id } });
-    expect(deletedTrack).toBeUndefined();
+    expect(deletedTrack).toBeNull();
   });
 
   it('delete should throw an exception for an invalid track', async () => {

@@ -117,7 +117,7 @@ describe('PerformerskService', () => {
     const performer: PerformerEntity = performersList[0];
     await service.delete(performer.id.toString());
     const storedPerformer: PerformerEntity = await repository.findOne({where: {id: performer.id}});
-    expect(storedPerformer).toBeUndefined();
+    expect(storedPerformer).toBeNull();
   });
 
 

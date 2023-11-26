@@ -6,8 +6,8 @@ import { TrackEntityModule } from './track-entity/track-entity.module';
 import { PerformerkEntityModule } from './performerk-entity/performerk-entity.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AlbumService } from './album-entity/album.service';
-import { TracksService } from './tracks/tracks.service';
-import { PerformerskService } from './performersk/performersk.service';
+import { TracksService } from './track-entity/tracks.service';
+import { PerformerskService } from './performerk-entity/performersk.service';
 
 @Module({
   imports: [AlbumEntityModule, TrackEntityModule, PerformerkEntityModule, TypeOrmModule.forRoot(
