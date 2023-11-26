@@ -77,9 +77,20 @@ describe('PerformerskService', () => {
     expect(storedPerformer).not.toBeNull();
     expect(storedPerformer.nombre).toEqual(performer.nombre);
     expect(storedPerformer.descripcion).toEqual(performer.descripcion);
-    await expect(() => service.create(performer)).rejects.toHaveProperty("message", "La descripcion del performer no puede estar vacia");
     expect(storedPerformer.imagen).toEqual(performer.imagen);
     expect(storedPerformer.albums).toEqual(performer.albums);
+  });
+
+  it("create should throw an exception for a performer with no description", async () => {
+
+    const performer: PerformerEntity = {
+      id: "",
+      nombre: faker.person.firstName(),
+      descripcion: "",
+      imagen: faker.image.imageUrl(),
+      albums: []
+    }
+    await expect(() => service.create(performer)).rejects.toHaveProperty("message", "La descripcion del performer no puede estar vacia");
   });
 
   it('update should modify a performer', async () => {
@@ -93,4 +104,21 @@ describe('PerformerskService', () => {
     expect(storedPerformer.nombre).toEqual(performer.nombre);
     expect(storedPerformer.descripcion).toEqual(performer.descripcion);
   });
+
+  it('update should throw an exception for an invalid performer', async () => {
+    let performer: PerformerEntity = performersList[0];
+    performer = {
+      ...performer, nombre: "New name", descripcion: "New description", imagen: "New image", albums: []
+    };
+    await expect(() => service.update(performer.id.toString(), performer)).rejects.toHaveProperty("message", "Performer not found");
+  });
+
+  it('delete should remove a performer', async () => {
+    const performer: PerformerEntity = performersList[0];
+    await service.delete(performer.id.toString());
+    const storedPerformer: PerformerEntity = await repository.findOne({where: {id: performer.id}});
+    expect(storedPerformer).toBeUndefined();
+  });
+
+
 });
