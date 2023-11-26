@@ -22,12 +22,15 @@ export class PerformerskService {
 
         const performersk: PerformerEntity = await this.performerskRepository.findOne({ where: {id}, relations: ['album']});
         if (!performersk) {
-            throw new BusinessLogicException('Performer not found', BusinessError.NOT_FOUND);
+            throw new BusinessLogicException(`Performer con el ID ${id} no encontrado`, BusinessError.NOT_FOUND);
         }
         return performersk;
     }
 
     async create(performersk: PerformerEntity): Promise<PerformerEntity> {
+        if(performersk.descripcion.startsWith("")){
+            throw new BusinessLogicException(`La descripcion del performer no puede estar vacia`, BusinessError.BAD_REQUEST);
+        }
         return await this.performerskRepository.save(performersk);
     }
 
