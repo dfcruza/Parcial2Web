@@ -110,7 +110,7 @@ describe('PerformerskService', () => {
     performer = {
       ...performer, nombre: "New name", descripcion: "New description", imagen: "New image", albums: []
     };
-    await expect(() => service.update(performer.id.toString(), performer)).rejects.toHaveProperty("message", "Performer not found");
+    await expect(() => service.update("0", performer)).rejects.toHaveProperty("message", "Performer not found");
   });
 
   it('delete should remove a performer', async () => {

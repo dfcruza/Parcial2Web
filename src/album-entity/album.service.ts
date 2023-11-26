@@ -26,6 +26,9 @@ export class AlbumService {
     }
 
     async create(album: AlbumEntity): Promise<AlbumEntity> {
+        if(album.nombre.startsWith('') || album.descripcion.startsWith('')){
+            throw new BusinessLogicException('El nombre y la descripcion no pueden estar vacios', BusinessError.BAD_REQUEST);
+        }
         return await this.albumRepository.save(album);
     }
 
@@ -45,6 +48,9 @@ export class AlbumService {
         const albumToDelete: AlbumEntity = await this.albumRepository.findOne({ where: {id: id.valueOf()}});
         if (!albumToDelete) {
             throw new BusinessLogicException('Album not found', BusinessError.NOT_FOUND);
+        }
+        else if(albumToDelete.tracks.length > 0){
+            throw new BusinessLogicException('Album has tracks', BusinessError.BAD_REQUEST);
         }
         await this.albumRepository.remove(albumToDelete);
     }
