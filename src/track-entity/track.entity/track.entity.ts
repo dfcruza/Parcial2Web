@@ -13,6 +13,6 @@ export class TrackEntity {
     @Column()
     duracion: Number;
 
-    @ManyToOne(type => AlbumEntity, album => album.tracks)
+    @ManyToOne(() => AlbumEntity, album => album.tracks)
     album: AlbumEntity;
 }

@@ -3,13 +3,16 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { TrackEntity } from 'src/track-entity/track.entity/track.entity';
 import { Repository } from 'typeorm';
 import { BusinessError, BusinessLogicException } from 'src/shared/bussiness-errors';
+import { AlbumEntity } from 'src/album-entity/album.entity/album.entity';
 
 @Injectable()
 export class TracksService {
 
     constructor(
     @InjectRepository(TrackEntity)
-    private readonly trackRepository: Repository<TrackEntity>) {}
+    private readonly trackRepository: Repository<TrackEntity>,
+    private readonly albumRepository: Repository<AlbumEntity>
+    ) {}
 
     async findAll(): Promise<TrackEntity[]> {
         return await this.trackRepository.find({ relations: ['album']});
@@ -24,10 +27,19 @@ export class TracksService {
         return track;
     }
 
-    async create(track: TrackEntity): Promise<TrackEntity> {
-        if (Number(track.duracion) < 0) {
+    async create(id: string ,track: TrackEntity): Promise<TrackEntity> {
+
+        const album = await this.albumRepository.findOne({ where: {id}, relations: ['tracks', 'performers']});
+        if(!album){
+            throw new BusinessLogicException('Album not found', BusinessError.NOT_FOUND);
+        }
+
+        if (Number(track.duracion) < 0 || isNaN(Number(track.duracion))) {
             throw new BusinessLogicException('La duracion no puede ser negativa', BusinessError.BAD_REQUEST);
         }
+
+        track.album = album;
+
         return await this.trackRepository.save(track);
     }
 
