@@ -9,9 +9,12 @@ import { AlbumService } from './album-entity/album.service';
 import { TracksService } from './track-entity/tracks.service';
 import { PerformerskService } from './performerk-entity/performersk.service';
 import { AlbumPerformerModule } from './album-performer/album-performer.module';
+import { AlbumController } from './album-entity/album.controller';
+import { TrackController } from './track-entity/track.controller';
 
 @Module({
-  imports: [AlbumEntityModule, TrackEntityModule, PerformerkEntityModule, TypeOrmModule.forRoot(
+  imports: [AlbumEntityModule, TrackEntityModule, PerformerkEntityModule, AlbumPerformerModule, 
+    TypeOrmModule.forRoot(
     {type: 'postgres',
     host: 'localhost',
     port: 5432,
@@ -21,8 +24,8 @@ import { AlbumPerformerModule } from './album-performer/album-performer.module';
    dropSchema: false,
    synchronize: true,
   keepConnectionAlive: true,}
-  ), AlbumPerformerModule],
-  controllers: [AppController],
+  )],
+  controllers: [AppController, AlbumController, TrackController],
   providers: [AppService, AlbumService, TracksService, PerformerskService],
 })
 export class AppModule {}
