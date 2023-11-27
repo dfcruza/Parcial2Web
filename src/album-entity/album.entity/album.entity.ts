@@ -9,7 +9,7 @@ import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable, OneToMan
 export class AlbumEntity {
 
     @PrimaryGeneratedColumn('uuid')
-    id: String;
+    id: string;
 
     @Column()
     nombre: String;

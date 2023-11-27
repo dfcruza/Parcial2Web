@@ -5,7 +5,7 @@ import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 export class TrackEntity {
 
     @PrimaryGeneratedColumn('uuid')
-    id: String;
+    id: string;
 
     @Column()
     nombre: String;

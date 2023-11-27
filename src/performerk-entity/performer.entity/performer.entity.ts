@@ -5,7 +5,7 @@ import { Entity, Column, PrimaryGeneratedColumn, ManyToMany } from 'typeorm';
 export class PerformerEntity {
 
     @PrimaryGeneratedColumn('uuid')
-    id: String;
+    id: string;
 
     @Column()
     nombre: String;

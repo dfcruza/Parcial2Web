@@ -25,7 +25,7 @@ export class TracksService {
     }
 
     async create(track: TrackEntity): Promise<TrackEntity> {
-        if(track.duracion < 0){
+        if (Number(track.duracion) < 0) {
             throw new BusinessLogicException('La duracion no puede ser negativa', BusinessError.BAD_REQUEST);
         }
         return await this.trackRepository.save(track);

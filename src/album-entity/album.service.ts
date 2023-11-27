@@ -45,7 +45,7 @@ export class AlbumService {
     }
 
     async delete(id: string): Promise<void> {
-        const albumToDelete: AlbumEntity = await this.albumRepository.findOne({ where: {id: id.valueOf()}});
+        const albumToDelete: AlbumEntity = await this.albumRepository.findOne({ where: {id}});
         if (!albumToDelete) {
             throw new BusinessLogicException('Album not found', BusinessError.NOT_FOUND);
         }
