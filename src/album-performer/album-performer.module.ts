@@ -3,10 +3,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AlbumEntity } from 'src/album-entity/album.entity/album.entity';
 import { AlbumPerformerService } from './album-performer.service';
 import { PerformerEntity } from 'src/performerk-entity/performer.entity/performer.entity';
+import { AlbumPerformerController } from './album-performer.controller';
 
 
 @Module({
     imports: [TypeOrmModule.forFeature([AlbumEntity, PerformerEntity])],
   providers: [AlbumPerformerService],
+  controllers: [AlbumPerformerController],
 })
 export class AlbumPerformerModule {}

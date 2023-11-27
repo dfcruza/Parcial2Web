@@ -25,7 +25,7 @@ import { TrackController } from './track-entity/track.controller';
    synchronize: true,
   keepConnectionAlive: true,}
   )],
-  controllers: [AppController, AlbumController, TrackController],
-  providers: [AppService, AlbumService, TracksService, PerformerskService],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}
